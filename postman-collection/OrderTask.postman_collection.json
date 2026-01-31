@@ -42,7 +42,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"name\": \"admin\",\r\n    \"email\": \"user@admin.com\",\r\n    \"password\": \"123456\",\r\n    \"password_confirmation\": \"123456\"\r\n}",
+                  "raw": "{\r\n    \"name\": \"admin\",\r\n    \"email\": \"admin@admin.com\",\r\n    \"password\": \"123456\",\r\n    \"password_confirmation\": \"123456\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -85,7 +85,7 @@
                 },
                 {
                   "key": "Date",
-                  "value": "Fri, 30 Jan 2026 16:32:49 GMT"
+                  "value": "Sat, 31 Jan 2026 10:50:15 GMT"
                 },
                 {
                   "key": "Access-Control-Allow-Origin",
@@ -93,7 +93,7 @@
                 }
               ],
               "cookie": [],
-              "body": "{\n    \"user\": {\n        \"name\": \"admin\",\n        \"email\": \"user@admin.com\",\n        \"updated_at\": \"2026-01-30T16:32:49.000000Z\",\n        \"created_at\": \"2026-01-30T16:32:49.000000Z\",\n        \"id\": 2\n    },\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzY5NzkwNzY5LCJleHAiOjE3Njk3OTQzNjksIm5iZiI6MTc2OTc5MDc2OSwianRpIjoiS2o4NXFWVVJ6MkZTQ3JnSCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.mc4nLYGX3WLkj9eNbUYgITWNeHhDROiCEHA4K3y-naw\"\n}"
+              "body": "{\n    \"message\": \"User registered successfully\",\n    \"errors\": null,\n    \"data\": {\n        \"user\": {\n            \"name\": \"admin\",\n            \"email\": \"admin@admin.com\",\n            \"updated_at\": \"2026-01-31T10:50:14.000000Z\",\n            \"created_at\": \"2026-01-31T10:50:14.000000Z\",\n            \"id\": 2\n        },\n        \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL3JlZ2lzdGVyIiwiaWF0IjoxNzY5ODU2NjE1LCJleHAiOjE3Njk4NjAyMTUsIm5iZiI6MTc2OTg1NjYxNSwianRpIjoiZ3FwY0FjRUdCVzVreGd2MSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.LT9AXZ4K27ps_cZ3xb46M6ncw8q0AuVmksc0lvuEJdE\"\n    }\n}"
             },
             {
               "name": "Register Invalid data",
@@ -224,7 +224,7 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.collectionVariables.set(\"token_var\", pm.response.json().token);\r",
+                  "pm.collectionVariables.set(\"token_var\", pm.response.json().data.token);\r",
                   ""
                 ],
                 "type": "text/javascript",
@@ -824,7 +824,7 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.collectionVariables.set('token_var', pm.response.json().token); // Refresh the token "
+                  "pm.collectionVariables.set('token_var', pm.response.json().data.token); // Refresh the token "
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -1364,7 +1364,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 3,\r\n      \"product_name\": \"Laptop\",\r\n      \"quantity\": 1,\r\n      \"price\": 16000\r\n    },\r\n    {\r\n      \"product_name\": \"Keyboard\",\r\n      \"quantity\": 2,\r\n      \"price\": 500\r\n    }\r\n  ]\r\n}",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"id\": 1,\r\n      \"product_name\": \"Laptop\",\r\n      \"quantity\": 1,\r\n      \"price\": 16000\r\n    },\r\n    {\r\n      \"product_name\": \"Keyboard\",\r\n      \"quantity\": 2,\r\n      \"price\": 500\r\n    }\r\n  ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1383,7 +1383,7 @@
               "variable": [
                 {
                   "key": "orderId",
-                  "value": "2"
+                  "value": "1"
                 }
               ]
             }

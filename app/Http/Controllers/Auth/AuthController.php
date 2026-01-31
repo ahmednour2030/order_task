@@ -22,10 +22,10 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json([
+        return $this->apiResponse('User registered successfully', [
             'user' => $user,
             'token' => $token
-        ], 201);
+        ], null, 201);
     }
 
     // Login
@@ -42,11 +42,13 @@ class AuthController extends Controller
             );
         }
 
-        return response()->json([
+        $data = [
             'token'       => $token,
             'token_type'  => 'bearer',
             'expires_in'  => auth('api')->factory()->getTTL() * 60,
-        ]);
+        ];
+
+        return $this->apiResponse('Login successful', $data);
     }
 
     // Get Authenticated User

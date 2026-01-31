@@ -6,8 +6,10 @@ services:
     container_name: laravel_php
     working_dir: /var/www/html
     volumes:
-      - .:/var/www/html:cached
-      - laravel_vendor:/var/www/html/vendor
+      - .:/var/www/html:rw,cached
+      - ./vendor:/var/www/html/vendor:delegated
+# Uncomment this line if you want to use a named volume for vendor, more suitable for production
+#      - laravel_vendor:/var/www/html/vendor
       - ./docker/php/conf.d/custom.ini:/usr/local/etc/php/conf.d/custom.ini:cached
     networks:
       - app-network
@@ -77,6 +79,6 @@ networks:
 
 volumes:
   db_data:
-  laravel_vendor:
   redis_data:
+  laravel_vendor:
 

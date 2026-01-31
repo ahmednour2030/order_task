@@ -23,11 +23,22 @@ class AuthControllerTest extends TestCase
             'password_confirmation' => 'password123',
         ]);
 
-        $response->assertStatus(201)
+        $response->assertCreated()
             ->assertJsonStructure([
-                'user' => ['id', 'name', 'email', 'created_at', 'updated_at'],
-                'token'
-            ]);
+                'message',
+                'errors',
+                'data' => [
+                    'user' => [
+                        'id',
+                        'name',
+                        'email',
+                        'created_at',
+                        'updated_at'
+                    ],
+                    'token'
+                ]
+            ])
+            ->assertJsonPath('data.user.email', 'ahmed@example.com');
 
         $this->assertDatabaseHas('users', [
             'email' => 'ahmed@example.com',
@@ -68,9 +79,13 @@ class AuthControllerTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                'token',
-                'token_type',
-                'expires_in'
+                'message',
+                'errors',
+                'data' => [
+                    'token',
+                    'token_type',
+                    'expires_in'
+                ]
             ]);
     }
 
@@ -103,11 +118,21 @@ class AuthControllerTest extends TestCase
             'Authorization' => 'Bearer '.$token,
         ])->getJson('/api/me');
 
-        $response->assertStatus(200)
-            ->assertJson([
-                'id' => $user->id,
-                'email' => $user->email,
-            ]);
+        $response->assertOk()
+            ->assertJsonStructure([
+                'message',
+                'errors',
+                'data' => [
+                    'id',
+                    'name',
+                    'email',
+                    'email_verified_at',
+                    'created_at',
+                    'updated_at',
+                ]
+            ])
+            ->assertJsonPath('data.id', $user->id)
+            ->assertJsonPath('data.email', $user->email);
     }
 
     #[Test]
@@ -153,6 +178,12 @@ class AuthControllerTest extends TestCase
         ])->postJson('/api/refresh');
 
         $response->assertStatus(200)
-            ->assertJsonStructure(['token']);
+            ->assertJsonStructure([
+                'message',
+                'errors',
+                'data' => [
+                    'token',
+                ]
+            ]);
     }
 }
