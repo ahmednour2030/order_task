@@ -41,6 +41,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY . /var/www/html
 
 # 4. Set permissions correctly for Laravel 12
+# git ownership
+RUN git config --system --add safe.directory /var/www/html
 
 RUN mkdir -p storage bootstrap/cache \
     && mkdir -p /var/www/html/vendor \
