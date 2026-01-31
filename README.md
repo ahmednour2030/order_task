@@ -134,13 +134,13 @@ docker-compose exec php php artisan test
 
 # Extending Payment Gateways
 
-### You can easily add custom payment gateways using the ```php Payment::extend() ``` method, 
-### similar to how Laravel extends cache or queue drivers. 
-### This allows you to register your own gateway implementation and use it through the Payment facade.
+#### You can easily add custom payment gateways using the ```php Payment::extend() ``` method, 
+#### similar to how Laravel extends cache or queue drivers. 
+#### This allows you to register your own gateway implementation and use it through the Payment facade.
 
-## Step 1 — Create Your Gateway Class
+### Step 1 — Create Your Gateway Class
 
-Create a gateway class that implements your payment logic:
+#### Create a gateway class that implements your payment logic:
 
 ``` php
 <?php
@@ -163,9 +163,9 @@ class VodafoneGateway
 
 ```
 
-## Step 2 — Register Gateway via Payment::extend
+### Step 2 — Register Gateway via Payment::extend
 
-### Register your custom gateway inside a service provider:
+#### Register your custom gateway inside a service provider:
 
 ``` php
 <?php
@@ -196,9 +196,9 @@ class PaymentServiceProvider extends ServiceProvider
 ```
 
 
-## Step 3 — Add Gateway Config (Optional)
+### Step 3 — Add Gateway Config (Optional)
 
-### You can define gateway configuration in:
+#### You can define gateway configuration in:
 
 config/payment.php
 
@@ -221,9 +221,9 @@ VODAFONE_API_KEY=your_key_here
 VODAFONE_SECRET=your_secret_here
 ````
 
-## Step 4 — Use the Gateway
+### Step 4 — Use the Gateway
 
-### Now you can use your custom gateway anywhere in the app:
+#### Now you can use your custom gateway anywhere in the app:
 
 ```php
 use App\Services\Payments\Facades\Payment;  
@@ -233,5 +233,11 @@ $paymentResult = Payment::gateway('vodafone')->charge(100.00);
 
 ## Step 5 — Auto Discovery (If Enabled)
 
-### If your PaymentManager supports auto-discovery, any gateway registered with ```php Payment::extend() ```
-### will automatically become available without additional wiring.
+#### If your PaymentManager supports auto-discovery, any gateway registered with ```php Payment::extend() ```
+#### will automatically become available without additional wiring.
+
+
+- Gateways should be stateless
+- Normalize responses across providers
+- Handle network/API failures gracefully
+- Prefer contracts for large-scale applications
