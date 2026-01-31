@@ -123,7 +123,7 @@ DB_USERNAME=laravel
 DB_PASSWORD=laravel
 ```
 ``` bash
-docker-compose exec app php artisan migrate --seed
+docker-compose exec php php artisan migrate --seed
 ```
 
 ``` bash
