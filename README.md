@@ -147,7 +147,9 @@ docker-compose exec php php artisan test
 
 namespace App\Services\CustomPayment;
 
-class VodafoneGateway
+use App\Services\Payments\Contracts\PaymentGateway;
+
+class VodafoneGateway implements PaymentGateway
 {
     public function charge(float $amount): array
     {
