@@ -229,7 +229,7 @@ VODAFONE_SECRET=your_secret_here
 
 ```php
 use App\Services\Payments\Facades\Payment;  
-...
+
 $paymentResult = Payment::gateway('vodafone')->charge(100.00);
 ``` 
 
