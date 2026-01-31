@@ -40,7 +40,9 @@
 
 ## Overview
 
-This is a modern Laravel application designed with JWT authentication and fully containerized using Docker. The project is optimized for scalability, maintainability, and rapid deployment. It provides a clean API structure with secure authentication mechanisms and can be easily integrated with frontend frameworks like React or Vue.js.
+This is a modern Laravel application designed with JWT authentication and fully containerized using Docker.
+The project is optimized for scalability, maintainability, and rapid deployment.
+It provides a clean API structure with secure authentication mechanisms and can be easily integrated with frontend frameworks like React or Vue.js.
 
 ---
 
@@ -130,3 +132,106 @@ docker-compose exec php php artisan migrate --seed
 docker-compose exec php php artisan test
 ```
 
+# Extending Payment Gateways
+
+### You can easily add custom payment gateways using the ```php Payment::extend() ``` method, 
+### similar to how Laravel extends cache or queue drivers. 
+### This allows you to register your own gateway implementation and use it through the Payment facade.
+
+## Step 1 — Create Your Gateway Class
+
+Create a gateway class that implements your payment logic:
+
+``` php
+<?php
+
+namespace App\Services\CustomPayment;
+
+class VodafoneGateway
+{
+    public function charge(float $amount): array
+    {
+        // Call external API or custom logic here
+
+        return [
+            'status' => 'success',
+            'transaction_id' => uniqid('vodafone_'),
+            'amount' => $amount,
+        ];
+    }
+}
+
+```
+
+## Step 2 — Register Gateway via Payment::extend
+
+### Register your custom gateway inside a service provider:
+
+``` php
+<?php
+
+namespace App\Providers;
+
+use App\Services\CustomPayment\VodafoneGateway;
+use App\Services\Payments\Facades\Payment;
+use Illuminate\Support\ServiceProvider;
+
+class PaymentServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        Payment::extend('vodafone', function ($app, $config) {
+            return Payment::repository(
+                new VodafoneGateway(/* config */)
+            );
+        });
+    }
+
+    public function boot(): void
+    {
+        //
+    }
+}
+
+```
+
+
+## Step 3 — Add Gateway Config (Optional)
+
+### You can define gateway configuration in:
+
+config/payment.php
+
+``` php
+return [
+    'default' => 'vodafone',
+
+    'gateways' => [
+        'vodafone' => [
+            'api_key' => env('VODAFONE_API_KEY'),
+            'secret' => env('VODAFONE_SECRET'),
+        ],
+    ],
+];
+
+```
+
+```bash
+VODAFONE_API_KEY=your_key_here
+VODAFONE_SECRET=your_secret_here
+````
+
+## Step 4 — Use the Gateway
+
+### Now you can use your custom gateway anywhere in the app:
+
+```php
+use App\Services\Payments\Facades\Payment;  
+...
+$paymentResult = Payment::gateway('vodafone')->charge(100.00);
+``` 
+
+## Step 5 — Auto Discovery (If Enabled)
+
+### If your PaymentManager supports auto-discovery, any gateway registered with ```php Payment::extend() ```
+### will automatically become available without additional wiring.
