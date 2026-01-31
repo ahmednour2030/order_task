@@ -16,13 +16,6 @@ class Order extends Model
         'status',
     ];
 
-    /**
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'status' => OrderStatus::class,
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class);
