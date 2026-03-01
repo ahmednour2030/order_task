@@ -134,7 +134,7 @@ docker-compose exec php php artisan test
 
 # Extending Payment Gateways
 
-#### You can easily add custom payment gateways using the ``` php Payment::extend() ``` method, 
+#### You can easily add custom payment gateways using the ` Payment::extend() ` method, 
 #### similar to how Laravel extends cache or queue drivers. 
 #### This allows you to register your own gateway implementation and use it through the Payment facade.
 
