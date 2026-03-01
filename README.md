@@ -235,7 +235,7 @@ $paymentResult = Payment::gateway('vodafone')->charge(100.00);
 
 ## Step 5 — Auto Discovery (If Enabled)
 
-#### If your PaymentManager supports auto-discovery, any gateway registered with ```php Payment::extend() ```
+#### If your PaymentManager supports auto-discovery, any gateway registered with ` Payment::extend() `
 #### will automatically become available without additional wiring.
 
 
